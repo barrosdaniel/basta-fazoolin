@@ -28,8 +28,8 @@ brunch = Menu('Brunch',
             'tea': 1.00,
             'mimosa': 10.50,
             'orange juice': 3.50},
-            '11am',
-            '4pm')
+            11,
+            16)
 
 early_bird = Menu('Early Bird',
                 {'salumeria plate': 8.00,
@@ -39,8 +39,8 @@ early_bird = Menu('Early Bird',
                 'mushroom ravioli (vegan)': 13.50,
                 'coffee': 1.50,
                 'espresso': 3.00},
-                '3pm',
-                '6pm')
+                15,
+                18)
 
 dinner = Menu('Dinner',
             {'crostini with eggplant caponata': 13.00,
@@ -50,15 +50,15 @@ dinner = Menu('Dinner',
             'mushroom ravioli (vegan)': 13.50,
             'coffee': 2.00,
             'espresso': 3.00},
-            '5pm',
-            '11pm')
+            17,
+            23)
 
 kids = Menu('Kids',
             {'chicken nuggets': 6.50,
             'fusilli with wild mushrooms': 12.00,
             'apple juice': 3.00},
-            '11am',
-            '9pm')
+            11,
+            21)
 
 print(brunch)
 
@@ -70,3 +70,37 @@ print(locale.currency(brunch.calculate_bill(order2)))
 
 order3 = ['salumeria plate', 'mushroom ravioli (vegan)']
 print(locale.currency(early_bird.calculate_bill(order3)))
+
+# =======================
+class Franchise:
+    def __init__(self, address, menus):
+        self.address = address
+        self.menus = menus
+
+    def __repr__(self):
+        return f"Address: {self.address}"
+    
+    def available_menus(self, time):
+        available_menus_list = []
+        for menu in self.menus:
+            if time >= menu.start_time and time <= menu.end_time:
+                available_menus_list.append(menu)
+        return available_menus_list
+
+flagship_store = Franchise('1232 West End Road',
+                    [
+                        brunch,
+                        early_bird,
+                        dinner,
+                        kids
+                    ])
+new_installment = Franchise('12 East Mulberry Street',
+                    [
+                        brunch,
+                        early_bird,
+                        dinner,
+                        kids
+                    ])
+
+print(flagship_store.available_menus(12))
+print(new_installment.available_menus(17))
